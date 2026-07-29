@@ -1,0 +1,23 @@
+[tool.uv.workspace]
+members = ["packages/*"]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Cross-repo dependency sources
+#
+# DEVELOPMENT MODE — use when simultaneously working on platform-framework.
+# Editable path installs make framework changes immediately visible here.
+# ─────────────────────────────────────────────────────────────────────────────
+[tool.uv.sources]
+framework-core  = { path = "../platform-framework/packages/framework-core",  editable = true }
+framework-infra = { path = "../platform-framework/packages/framework-infra", editable = true }
+# RELEASED MODE — uncomment after publishing framework wheels to the local index:
+# framework-core  = { index = "local" }
+# framework-infra = { index = "local" }
+
+[[tool.uv.index]]
+name     = "local"
+url      = "http://localhost:8080/simple/"
+explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["packages"]
