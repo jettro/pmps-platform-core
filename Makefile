@@ -7,11 +7,12 @@ test:
 	uv run pytest
 
 build:
-	uv build --package core-domain
-	uv build --package core-services
+	uv build --no-sources --package core-domain --out-dir dist
+	uv build --no-sources --package core-services --out-dir dist
 
 publish:
-	UV_PUBLISH_USERNAME=any UV_PUBLISH_PASSWORD=any uv publish --publish-url http://localhost:8080 dist/*.whl
+	@test -f ../local-pypi/.env || (echo "Run 'make pypi-init-auth' in the coordination repo first." >&2; exit 1)
+	@set -a; . ../local-pypi/.env; set +a; uv publish --publish-url http://localhost:8080 dist/*.whl
 
 check-lock:
 	uv lock --check

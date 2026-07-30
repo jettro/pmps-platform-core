@@ -8,11 +8,10 @@ members = ["packages/*"]
 # Editable path installs make framework changes immediately visible here.
 # ─────────────────────────────────────────────────────────────────────────────
 [tool.uv.sources]
+core-domain = { workspace = true }
+core-services = { workspace = true }
 framework-core  = { path = "../platform-framework/packages/framework-core",  editable = true }
 framework-infra = { path = "../platform-framework/packages/framework-infra", editable = true }
-# RELEASED MODE — uncomment after publishing framework wheels to the local index:
-# framework-core  = { index = "local" }
-# framework-infra = { index = "local" }
 
 [[tool.uv.index]]
 name     = "local"

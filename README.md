@@ -36,39 +36,17 @@ framework-infra = { path = "../platform-framework/packages/framework-infra", edi
 Any change you make in `platform-framework` is instantly visible here because uv
 mounts the source directory directly — no reinstall needed.
 
-### Released mode
+### Deployment modes
 
-Once you have published framework wheels to the local private PyPI index, switch by
-**commenting out** the path sources and **uncommenting** the index sources:
-
-```toml
-# root pyproject.toml
-[tool.uv.sources]
-# framework-core  = { path = "../platform-framework/packages/framework-core",  editable = true }
-# framework-infra = { path = "../platform-framework/packages/framework-infra", editable = true }
-framework-core  = { index = "local" }
-framework-infra = { index = "local" }
-```
-
-Then run `uv sync` to pull the pinned wheels from `http://localhost:8080`.
+The root manifest remains optimized for editable host development. Release, Git, and
+non-editable local image sources are selected by independent manifests and locks under the
+sales application's `docker/modes` directory.
 
 ## How sales-application consumes these packages
 
-`sales-application` adds `core-domain` and `core-services` as dependencies. In its
-workspace root `pyproject.toml` it declares:
-
-```toml
-# DEVELOPMENT MODE (parallel local development)
-[tool.uv.sources]
-core-domain   = { path = "../platform-core/packages/core-domain",   editable = true }
-core-services = { path = "../platform-core/packages/core-services",  editable = true }
-
-# RELEASED MODE (after `make publish` here)
-# core-domain   = { index = "local" }
-# core-services = { index = "local" }
-```
-
-Same two-mode pattern — switch by commenting/uncommenting a single block.
+`sales-application` uses editable paths on the host. Its Docker-specific manifests select
+released wheels, exact Git commits, or neighbouring non-editable source snapshots without
+editing this repository's development configuration.
 
 ## Build and publish
 
