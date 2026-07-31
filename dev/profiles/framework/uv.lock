@@ -2,12 +2,6 @@ version = 1
 revision = 3
 requires-python = ">=3.12"
 
-[manifest]
-members = [
-    "core-domain",
-    "core-services",
-]
-
 [[package]]
 name = "colorama"
 version = "0.4.6"
@@ -20,7 +14,7 @@ wheels = [
 [[package]]
 name = "core-domain"
 version = "0.1.0"
-source = { editable = "packages/core-domain" }
+source = { editable = "../../../packages/core-domain" }
 dependencies = [
     { name = "framework-core" },
 ]
@@ -29,11 +23,12 @@ dependencies = [
 requires-dist = [{ name = "framework-core", specifier = ">=0.1,<1", index = "http://localhost:8080/simple/" }]
 
 [[package]]
-name = "core-services"
-version = "0.1.0"
-source = { editable = "packages/core-services" }
+name = "core-framework-development"
+version = "0.0.0"
+source = { virtual = "." }
 dependencies = [
     { name = "core-domain" },
+    { name = "core-services" },
     { name = "framework-core" },
     { name = "framework-infra" },
 ]
@@ -45,7 +40,28 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "core-domain", editable = "packages/core-domain" },
+    { name = "core-domain", editable = "../../../packages/core-domain" },
+    { name = "core-services", editable = "../../../packages/core-services" },
+    { name = "framework-core", editable = "../../../../platform-framework/packages/framework-core" },
+    { name = "framework-infra", editable = "../../../../platform-framework/packages/framework-infra" },
+]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=8" }]
+
+[[package]]
+name = "core-services"
+version = "0.1.0"
+source = { editable = "../../../packages/core-services" }
+dependencies = [
+    { name = "core-domain" },
+    { name = "framework-core" },
+    { name = "framework-infra" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "core-domain", editable = "../../../packages/core-domain" },
     { name = "framework-core", specifier = ">=0.1,<1", index = "http://localhost:8080/simple/" },
     { name = "framework-infra", specifier = ">=0.1,<1", index = "http://localhost:8080/simple/" },
 ]
@@ -56,21 +72,21 @@ dev = [{ name = "pytest", specifier = ">=8" }]
 [[package]]
 name = "framework-core"
 version = "0.1.0"
-source = { registry = "http://localhost:8080/simple/" }
-wheels = [
-    { url = "http://localhost:8080/packages/framework_core-0.1.0-py3-none-any.whl", hash = "sha256:13f7c225496deaa3e0a3ac9358732102da7c929cc595ffb733b8d6ad0078f242" },
-]
+source = { editable = "../../../../platform-framework/packages/framework-core" }
 
 [[package]]
 name = "framework-infra"
 version = "0.1.0"
-source = { registry = "http://localhost:8080/simple/" }
+source = { editable = "../../../../platform-framework/packages/framework-infra" }
 dependencies = [
     { name = "framework-core" },
 ]
-wheels = [
-    { url = "http://localhost:8080/packages/framework_infra-0.1.0-py3-none-any.whl", hash = "sha256:7971abefdc0bbe5dc574e42c23e10af2cdea1623c069c1edf113a5d282052a75" },
-]
+
+[package.metadata]
+requires-dist = [{ name = "framework-core", editable = "../../../../platform-framework/packages/framework-core" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "framework-evaluation", editable = "../../../../platform-framework/packages/framework-evaluation" }]
 
 [[package]]
 name = "iniconfig"

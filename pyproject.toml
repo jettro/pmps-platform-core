@@ -1,17 +1,13 @@
 [tool.uv.workspace]
 members = ["packages/*"]
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Cross-repo dependency sources
-#
-# DEVELOPMENT MODE — use when simultaneously working on platform-framework.
-# Editable path installs make framework changes immediately visible here.
-# ─────────────────────────────────────────────────────────────────────────────
+# Released framework packages are the default. The explicit framework developer
+# profile under dev/profiles is the opt-in source overlay.
 [tool.uv.sources]
 core-domain = { workspace = true }
 core-services = { workspace = true }
-framework-core  = { path = "../platform-framework/packages/framework-core",  editable = true }
-framework-infra = { path = "../platform-framework/packages/framework-infra", editable = true }
+framework-core = { index = "local" }
+framework-infra = { index = "local" }
 
 [[tool.uv.index]]
 name     = "local"
