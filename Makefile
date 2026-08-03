@@ -1,9 +1,13 @@
 .PHONY: \
+	git-status \
 	sync dev-release dev-framework dev-status \
 	test build publish check-lock check-dev-locks
 
 DEV_ENV := $(CURDIR)/.venv
 INDEX_ENV := ../local-pypi/.env
+
+git-status:
+	@./scripts/git-status.sh . platform-core
 
 sync: dev-release
 
