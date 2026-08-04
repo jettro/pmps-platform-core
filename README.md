@@ -31,7 +31,7 @@ framework-core = { index = "local" }
 framework-infra = { index = "local" }
 ```
 
-Select the committed framework profile only when changing framework source:
+Select editable framework source only when changing framework itself:
 
 ```bash
 make dev-release    # released framework
@@ -39,13 +39,15 @@ make dev-framework  # editable sibling framework
 make dev-status
 ```
 
-Both commands synchronize into `platform-core/.venv`, so the IDE interpreter remains
-stable. The presence of a framework checkout never changes the selected dependencies.
+Both commands update the same root manifest and lock and synchronize into
+`platform-core/.venv`, so the IDE sees one project and interpreter. The presence of a
+framework checkout never changes dependencies by itself. Return to `dev-release` before
+committing or pulling.
 
 ## How sales-application consumes these packages
 
 `sales-application` consumes released core wheels by default and exposes an explicit
-`dev-core` profile for editable core source. Its image inputs select released wheels, exact
+`dev-core` mode for editable core source. Its image inputs select released wheels, exact
 Git commits, or neighbouring non-editable source snapshots.
 
 ## Build and publish

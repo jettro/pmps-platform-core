@@ -1,13 +1,18 @@
 [tool.uv.workspace]
-members = ["packages/*"]
+members = [
+    "packages/core-domain",
+    "packages/core-services"
+]
 
-# Released framework packages are the default. The explicit framework developer
-# profile under dev/profiles is the opt-in source overlay.
+# This block is managed by scripts/select-sources.py. Release is the canonical
+# committed mode; use make dev-framework to opt in to editable framework source.
+# BEGIN GENERATED DEVELOPMENT SOURCES
 [tool.uv.sources]
 core-domain = { workspace = true }
 core-services = { workspace = true }
 framework-core = { index = "local" }
 framework-infra = { index = "local" }
+# END GENERATED DEVELOPMENT SOURCES
 
 [[tool.uv.index]]
 name     = "local"

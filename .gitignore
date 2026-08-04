@@ -6,4 +6,4 @@ dist/
 .pytest_cache/
 .env
 *.htpasswd
-.dev-profile
+.idea
